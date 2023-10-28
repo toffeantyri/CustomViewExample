@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_size">20sp</dimen>
+    <dimen name="slider_default_size">200dp</dimen>
+    <dimen name="slider_min_radius">8dp</dimen>
+    <dimen name="slider_custom_radius">30dp</dimen>
+</resources>
