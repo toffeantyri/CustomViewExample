@@ -10,6 +10,6 @@
     <color name="test">#BFFFFFFF</color>
 
     <color name="circle_background">#E2348DAF</color>
-    <color name="circle_foreground">#D3AB34AF</color>
+    <color name="circle_foreground">#AB34AF</color>
 
 </resources>

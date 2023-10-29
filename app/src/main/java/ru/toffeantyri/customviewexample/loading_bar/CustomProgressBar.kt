@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Point
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
@@ -45,6 +47,7 @@ class CustomProgressBar @JvmOverloads constructor(
         initCenter(canvas)
         paint.color = context.getColor(R.color.circle_background)
         paint.style = Paint.Style.FILL
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP)
         canvas.drawCircle(center.x.toFloat(), center.y.toFloat(), circleRadius.toFloat(), paint)
         drawRectangle(canvas)
     }
@@ -57,6 +60,7 @@ class CustomProgressBar @JvmOverloads constructor(
     private fun drawRectangle(canvas: Canvas) {
         paint.color = context.getColor(R.color.circle_foreground)
         paint.style = Paint.Style.FILL
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_OUT)
         val top: Float = (if (tickState in 0..1) center.y - circleRadius else center.y).toFloat()
         val right: Float = (if (tickState in 1..2) center.x + circleRadius else center.x).toFloat()
         val bottom: Float = (if (tickState in 0..1) center.y else center.y + circleRadius).toFloat()
