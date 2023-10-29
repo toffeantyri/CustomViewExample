@@ -4,4 +4,5 @@
     <dimen name="slider_default_size">200dp</dimen>
     <dimen name="slider_min_radius">8dp</dimen>
     <dimen name="slider_custom_radius">30dp</dimen>
+    <dimen name="loading_circle_radius">50dp</dimen>
 </resources>

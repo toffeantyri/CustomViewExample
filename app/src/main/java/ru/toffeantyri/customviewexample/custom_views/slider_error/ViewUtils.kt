@@ -1,4 +1,4 @@
-package ru.toffeantyri.customviewexample.custom_view
+package ru.toffeantyri.customviewexample.custom_views.slider_error
 
 import android.graphics.Point
 import kotlin.math.atan

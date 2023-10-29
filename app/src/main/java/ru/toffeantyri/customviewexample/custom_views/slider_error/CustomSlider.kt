@@ -1,4 +1,4 @@
-package ru.toffeantyri.customviewexample.custom_view
+package ru.toffeantyri.customviewexample.custom_views.slider_error
 
 import android.content.Context
 import android.content.res.TypedArray

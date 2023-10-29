@@ -2,15 +2,16 @@ package ru.toffeantyri.customviewexample
 
 import android.app.Activity
 import android.os.Bundle
-import androidx.core.app.ComponentActivity
+import ru.toffeantyri.customviewexample.databinding.MainActivityBinding
 
 class MainActivity : Activity() {
 
+    private lateinit var binding: MainActivityBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity)
-
-
+        binding = MainActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
+
 }
 
