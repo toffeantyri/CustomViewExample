@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="CustomSlider">
-        <attr name="min_value" format="integer"/>
-        <attr name="max_value" format="integer"/>
-        <attr name="current_value" format="integer"/>
-        <attr name="touch_radius" format="integer"/>
+        <attr name="min_value" format="integer" />
+        <attr name="max_value" format="integer" />
+        <attr name="current_value" format="integer" />
+        <attr name="touch_radius" format="integer" />
+    </declare-styleable>
+
+
+    <declare-styleable name="CustomProgressBar">
+        <attr name="general_background" format="color" />
     </declare-styleable>
 </resources>

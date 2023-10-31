@@ -1,7 +1,9 @@
 package ru.toffeantyri.customviewexample.loading_bar
 
 import android.content.Context
+import android.content.res.TypedArray
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Point
 import android.graphics.PorterDuff
@@ -10,6 +12,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import androidx.annotation.ColorInt
 import ru.toffeantyri.customviewexample.R
 
 class CustomProgressBar @JvmOverloads constructor(
@@ -18,7 +21,8 @@ class CustomProgressBar @JvmOverloads constructor(
     style: Int = 0
 ) : View(context, attrs, style) {
 
-
+    @ColorInt
+    private var generalBackground: Int = Color.TRANSPARENT
     private var animStarted = false
     private var tickState = 0
 
@@ -26,10 +30,13 @@ class CustomProgressBar @JvmOverloads constructor(
     private val center = Point()
     private var circleRadius = resources.getDimensionPixelSize(R.dimen.loading_circle_radius)
 
-
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
+    init {
+        val typedArray: TypedArray =
+            context.obtainStyledAttributes(attrs, R.styleable.CustomProgressBar)
+        generalBackground = typedArray.getColor(R.styleable.CustomProgressBar_general_background, 0)
+        typedArray.recycle()
     }
+
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         Log.d("MyLogView", "onMeasure")
@@ -45,9 +52,9 @@ class CustomProgressBar @JvmOverloads constructor(
         super.onDraw(canvas)
         Log.d("MyLogView", "onDraw")
         initCenter(canvas)
+
         paint.color = context.getColor(R.color.circle_background)
         paint.style = Paint.Style.FILL
-        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP)
         canvas.drawCircle(center.x.toFloat(), center.y.toFloat(), circleRadius.toFloat(), paint)
         drawRectangle(canvas)
     }
@@ -58,14 +65,18 @@ class CustomProgressBar @JvmOverloads constructor(
     }
 
     private fun drawRectangle(canvas: Canvas) {
-        paint.color = context.getColor(R.color.circle_foreground)
+        paint.color = generalBackground
         paint.style = Paint.Style.FILL
-        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_OUT)
+
+        val mode = PorterDuff.Mode.SRC_ATOP
+
+        paint.xfermode = PorterDuffXfermode(mode)
         val top: Float = (if (tickState in 0..1) center.y - circleRadius else center.y).toFloat()
         val right: Float = (if (tickState in 1..2) center.x + circleRadius else center.x).toFloat()
         val bottom: Float = (if (tickState in 0..1) center.y else center.y + circleRadius).toFloat()
         val left: Float = (if (tickState in 1..2) center.x else center.x - circleRadius).toFloat()
         canvas.drawRect(left, top, right, bottom, paint)
+
     }
 
     private val mRunnable: Runnable = Runnable {
@@ -88,11 +99,23 @@ class CustomProgressBar @JvmOverloads constructor(
         handler.removeCallbacks(animatorTickRunnable)
     }
 
+    private var isTap = false
+
     override fun onTouchEvent(event: MotionEvent?): Boolean {
+        Log.d("MyLog", "action : ${event?.action}")
+
         if (event?.action == MotionEvent.ACTION_DOWN) {
-            animStarted = !animStarted
-            if (animStarted) startLoading() else stopLoading()
+            isTap = true
             return true
+        }
+
+        if (event?.action == MotionEvent.ACTION_UP) {
+            if (isTap) {
+                isTap = false
+                animStarted = !animStarted
+                if (animStarted) startLoading() else stopLoading()
+                return true
+            }
         }
         return false
     }
